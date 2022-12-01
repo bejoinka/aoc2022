@@ -10,7 +10,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from typing import Generator
+from typing import Generator, Any
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,7 +35,7 @@ def timing(name: str = '') -> Generator[None, None, None]:
 def _get_cookie_headers() -> dict[str, str]:
     with open(os.path.join(HERE, '../.env')) as f:
         contents = f.read().strip()
-    return {'Cookie': contents}
+    return {'Cookie': contents, 'User-Agent': 'https://github.com/bejoinka/aoc2022 by jbb@jbb.dev'}
 
 
 def get_input(year: int, day: int) -> str:
@@ -206,6 +206,21 @@ def format_coords_hash(coords: set[tuple[int, int]]) -> str:
 
 def print_coords_hash(coords: set[tuple[int, int]]) -> None:
     print(format_coords_hash(coords))
+
+
+def separate_by_newline(l: list[Any]) -> list[Any]:
+    new_list = list()
+    grouped_itm = list()
+    for itm in l:
+        if itm is None or len(itm) == 0:
+            new_list.append(grouped_itm.copy())
+            grouped_itm = list()
+            continue
+        grouped_itm.append(itm)
+    new_list.append(grouped_itm)
+    return new_list
+
+
 
 
 class Direction4(enum.Enum):

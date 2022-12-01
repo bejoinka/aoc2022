@@ -5,7 +5,14 @@ https://adventofcode.com/2022
 
 Thanks to anthonywritescode for this super easy way to grab input.txt and submit the answers to advent of code!
 
+I included a practice run (2021 day 3) in here as well. Modifying support a little to create new utilities.
+
 [Visit Anthony's github](https://github.com/anthonywritescode)
+
+
+### Leaderboards
+![Leaderboard](leaderboard.png)
+
 
 ### timing
 

@@ -11,28 +11,33 @@ INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 
 
 def compute(s: str) -> int:
-    l = support.separate_by_newline(s.strip().split('\n'))
-    sums = [sum([int(f) for f in food]) for food in l]
-    return max(sums)
+    n = 0
+    l = s.strip().split('\n')
+    for i, c in enumerate(l[1:]):
+        if int(c) > int(l[i]):
+            n += 1
+        # if c == '(':
+        #     n += 1
+        # elif c == ')':
+        #     n -= 1
+        # else:
+        #     raise AssertionError(f'unexpected: {c!r}')
+    return n
 
 
 INPUT_S = '''\
-1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000
+199
+200
+208
+210
+200
+207
+240
+269
+260
+263
 '''
-EXPECTED = 24000
+EXPECTED = 7
 
 
 @pytest.mark.parametrize(
