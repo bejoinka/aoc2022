@@ -9,34 +9,28 @@ import support
 
 INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 
-def rps(a, b):
-    if a == 'A':
-        if b == 'X':
-            return 1 + 3
-        elif b == 'Y':
-            return 2 + 6
-        elif b == 'Z':
-            return 3 + 0
-    elif a == 'B':
-        if b == 'X':
-            return 1 + 0
-        elif b == 'Y':
-            return 2 + 3
-        elif b == 'Z':
-            return 3 + 6
-    elif a == 'C':
-        if b == 'X':
-            return 1 + 6
-        elif b == 'Y':
-            return 2 + 0
-        elif b == 'Z':
-            return 3 + 3
+def rps_value(v):
+    if v == 'A' or v == 'X':
+        return 1
+    if v == 'B' or v == 'Y':
+        return 2
+    if v == 'C' or v == 'Z':
+        return 3
+
+def eval_rps(opp, you):
+    dif = rps_value(you) - rps_value(opp)
+    if dif == 1 or dif == -2:
+        return 6 + rps_value(you)
+    elif dif == 0:
+        return 3 + rps_value(you)
+    else:
+        return 0 + rps_value(you)
 
 def compute(s: str) -> int:
     n = 0
     l = s.strip().split('\n')
     for game in l:
-        n += rps(*game.split(' '))
+        n += eval_rps(*game.split(' '))
     return n
 
 
