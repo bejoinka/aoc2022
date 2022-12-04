@@ -4,3 +4,4 @@
 .vscode/
 venv/
 2021day*/
+.DS_Store

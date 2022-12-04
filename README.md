@@ -14,16 +14,7 @@ Going for timed using python and then will attempt in other languages.
 ![Leaderboard](leaderboard.png)
 
 
-### timing
+### times
 
-- comparing to these numbers isn't necessarily useful
-- normalize your timing to day 1 part 1 and compare
-- alternate implementations are listed in parens
-- these timings are very non-scientific (sample size 1)
-
-```console
-$ find -maxdepth 1 -type d -name 'day*' -not -name day00 | sort | xargs --replace bash -xc 'python {}/part1.py {}/input.txt; python {}/part2.py {}/input.txt'
-+ python ./day01/part1.py ./day01/input.txt
-74
-> 1272 μs
-```
+There will be a few days (e.g. going out with my wife) where I am unable to compete at 9pm PT. So, instead, I'm including creating the folder and using the created time of `__init__.py` as my start time.
+ - day 4: Started @ 2:04:22, so `part1 = 00:07:41 and part2 = 00:08:40`
