@@ -13,20 +13,13 @@ INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 def compute(s: str) -> int:
     n = 0
     l = s.strip().split('\n')
-    for i, c in enumerate(l[1:]):
+    for i, c in enumerate(l):
         if int(c) > int(l[i]):
             n += 1
-        # if c == '(':
-        #     n += 1
-        # elif c == ')':
-        #     n -= 1
-        # else:
-        #     raise AssertionError(f'unexpected: {c!r}')
     return n
 
 
-INPUT_S = '''\
-199
+INPUT_S = '''199
 200
 208
 210
