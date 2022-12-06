@@ -11,14 +11,13 @@ INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 
 def compute(s: str) -> int:
     n = 0
-    l = s.strip().split('\n')
-    for _, c in enumerate(l):
-        for i, char in enumerate(c):
-            if i < 13:
-                continue
-            s = set([f for f in c[i-14:i]])
-            if len(s) == 14:
-                return i
+    l = s.strip().split('\n')[0]
+    for i, _ in enumerate(l):
+        if i < 3:
+            continue
+        s = set(l[i-4:i])
+        if len(s) == 4:
+            return i
     return 0
 
 
