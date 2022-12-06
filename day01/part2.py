@@ -13,7 +13,7 @@ INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 def compute(s: str) -> int:
     l = support.separate_by_newline(s.strip().split('\n'))
     sums = [sum([int(f) for f in food]) for food in l]
-    return sum(list(sorted(sums, reverse=True))[:3])
+    return sum(sorted(sums, reverse=True)[:3])
 
 
 INPUT_S = '''\

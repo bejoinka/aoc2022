@@ -13,6 +13,9 @@ Going for timed using python and then will attempt in other languages.
 ### Personal times and global finishes
 ![Leaderboard](leaderboard.png)
 
+### golang
+I started learning go on 12/3 and i'm using aoc to get a little better with it. the code still feels like i'm creating boilerplate where i maybe shouldn't (lots of `for i, v := range`), so I'm hoping to get some good feedback from experts who have more experience here.
+
 
 ### times
 
