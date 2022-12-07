@@ -1,0 +1,25 @@
+{
+  "name": "aoc2022",
+  "version": "1.0.0",
+  "description": "advent of code 2022 ===================",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bejoinka/aoc2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bejoinka/aoc2022/issues"
+  },
+  "homepage": "https://github.com/bejoinka/aoc2022#readme",
+  "dependencies": {
+    "commander": "^9.4.1",
+    "fs": "^0.0.1-security",
+    "jest": "^29.3.1"
+  }
+}
