@@ -14,50 +14,77 @@ function run(options) {
     }
 }
 
-function part1(input) {
-    let files = {"/": []}
-    let cur_dir = ""
-    const str = input.trim().split('\n')
-    str.forEach(ln => {
+/**
+ * returns the filesystem in a record, where each folder is an entry, regardless of hierarchy
+ * @param {string[]} input 
+ * @returns {Record<string, Array<string | number>>}
+ */
+ function getFS(input) {
+    const files = {"/": []}
+    let curDir = ""
+    input.forEach(ln => {
         if (ln.startsWith('$ cd')) {
-            switch (ln.slice(5, undefined)) {
-                case '/': {
-                    cur_dir = '/'
-                    break
-                }
-                case '..': {
-                    const d = cur_dir
-                        .slice(0, cur_dir.length - 1)
-                        .split('/')
-                    cur_dir = d.slice(0, d.length - 1).reduce(tot, cur => tot + "/" + cur, "") + "/"
-                    break
-                }
-                default: {
-                    cur_dir = cur_dir + "/" + ln.slice(5, undefined)
-                }
-            }
-            console.log_cur_dir
+            curDir = parseCurDir(ln, curDir)
         } else if (ln.startsWith('$ ls')) {
             return
         } else {
-            if (files[cur_dir] == undefined) {
-                files[cur_dir] = []
+            if (files[curDir] == undefined) {
+                files[curDir] = []
             }
-            files[cur_dir].push(ln.split(' '))
+            files[curDir].push(ln.split(' '))
         }
     })
+    return files
+}
+
+function parseCurDir(ln, curDir) {
+    switch (ln.slice(5, undefined)) {
+        case '/': {
+            curDir = '/'
+            break
+        }
+        case '..': {
+            curDir = curDir.replace(/\w+\/$/g, "")
+            break
+        }
+        default: {
+            curDir = curDir + ln.slice(5, undefined) + "/"
+        }
+    }
+    return curDir
+}
+
+function getTotalSize(k, contents, files) {
+    return contents.reduce((t, c) => {
+        if (c[0] == 'dir') {
+            const subDirName = k + c[1] + '/'
+            return t + getTotalSize(
+                ...Object.entries(files).filter(f => f[0] == subDirName)[0],
+                files
+            )
+        }
+        return t+Number(c[0])
+    }, 0)
+}
+
+function part1(input) {
+    const shell = input.trim().split('\n')
+    const files = getFS(shell)
+    const fileSizes = Object.entries(files).map(f => {
+        return getTotalSize(...f, files)
+    })
+    return fileSizes.reduce((tot, cur) => {
+        return cur < 100000 ? tot + cur : tot
+    }, 0)
 }
 
 function part2(input) {
-    str = input.trim()
-    let i = -1
-    const strArr = str.split('')
-    for (i = 13; i < strArr.length; i++) {
-        if (new Set(strArr.slice(i - 13, i+1)).size == 14) {
-            return i + 1
-        }
-    }
-    return i
+    const shell = input.trim().split('\n')
+    const files = getFS(shell)
+    const fileSizes = Object.entries(files).map(f => {
+        return getTotalSize(...f, files)
+    })
+    return fileSizes.sort((a, b) => a - b).filter(f => f > 8381165)[0]
 }
 
 module.exports = {

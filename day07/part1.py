@@ -64,7 +64,8 @@ class Drive:
         if d == '/':
             self.current_loc = '/'
         elif d == '..':
-            self.current_loc = "/".join(self.current_loc.split('/')[:-2]) + "/"
+            import re
+            self.current_loc = re.sub(r"\w+\/$", "", self.current_loc)
         else:
             self.current_loc += f"{d}/"
 
