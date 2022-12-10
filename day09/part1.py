@@ -22,11 +22,7 @@ def compute_direction(instr: str) -> tuple[int, int]:
     yield [mvmt for _ in range(int(distance))]
 
 def move_tail(head, tail):
-    # if sum is 3 then bring to 1
-    # elif max is 2 then bring to 1
-    # else do nothing
     if any(abs(h - t) == 2 for (h, t) in zip(head, tail)):
-        # we're moving, so get down to zero if you can
         tail_move = [
             (head[i] - tail[i]) // 2 if abs(head[i] - tail[i]) == 2 else head[i] - tail[i] for i in range(2)
         ]

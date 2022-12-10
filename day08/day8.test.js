@@ -7,7 +7,7 @@ const input = `\
 33549
 35390
 `
-describe('day7', () => {
+describe('day8', () => {
     test('part1', () => {
         expect(aoc.run({part: 1, input})).toStrictEqual(21)
     })
