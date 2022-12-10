@@ -27,3 +27,4 @@ from the home directory:
 There will be a few days (e.g. going out with my wife) where I am unable to compete at 9pm PT. So, instead, I'm including creating the folder and using the created time of `__init__.py` as my start time.
  - day 4: Started @ 2:04:22, so `part1 = 00:07:41 and part2 = 00:08:40`
  - day 9: Started @ 7:11:00, so `part1 = 01:09:13 and part2 = 01:23:08`
+ - day 10: Started @ 9:30:00, so `part1 = 00:27:37 and part2 = 00:50:23`
