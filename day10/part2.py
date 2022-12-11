@@ -57,7 +57,6 @@ def compute(s: str) -> int:
                 CRT += "\n"
                 row += 1
             column = (cycle - 1) % 40
-            print('checking column against sprites', column, sprite_loc)
             CRT += "#" if any([column == s for s in sprite_loc]) else "."
             register_value += v
             # move the sprites

@@ -58,6 +58,28 @@ def compute(s: str) -> int:
     return sum(signal_strengths)
 
 
+# from chatGPT
+def update_register_and_signal(instructions):
+  # initialize X register to 1 and signal strength to 0
+  x = 1
+  signal_strength = 0
+
+  # simulate the execution of the instructions
+  for i in range(len(instructions)):
+    # if the instruction is "noop", do nothing
+    if instructions[i] == "noop":
+      continue
+    # if the instruction is "addx", update the value of X
+    elif instructions[i].startswith("addx"):
+      x += int(instructions[i].split()[1])
+
+    # update the signal strength for every 20th, 60th, 100th, 140th, 180th, and 220th cycle
+    if (i + 1) % 40 in [20, 60, 100, 140, 180, 220]:
+      signal_strength += (i + 1) * x
+
+  return x, signal_strength
+
+
 INPUT_S = '''\
 addx 15
 addx -11
@@ -216,7 +238,9 @@ EXPECTED = 13140
     ),
 )
 def test(input_s: str, expected: int) -> None:
-    assert compute(input_s) == expected
+    x, sig = update_register_and_signal(input_s.strip().splitlines())
+    assert sig == expected
+    # assert compute(input_s) == expected
 
 
 def main() -> int:
