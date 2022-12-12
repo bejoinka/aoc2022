@@ -2,20 +2,21 @@ from __future__ import annotations
 
 import argparse
 import os.path
+import heapq
 
 import pytest
 
 import support
-import heapq
+
 INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 
 D = {
-    'S': chr(ord('a')),
-    'E': chr(ord('z')),
+    'S': 'a',
+    'E': 'z',
 }
 
 def compute(s: str) -> int:
-    start = None
+    start, end = None, None
     coords = dict()
     for y, row in enumerate(s.splitlines()):
         for x, char in enumerate(row):
@@ -26,11 +27,13 @@ def compute(s: str) -> int:
                 start = (x, y)
 
     assert start is not None
+    assert end is not None
     visited = set()
     queue = [(0, start)]
 
     while queue:
         steps, pos = heapq.heappop(queue)
+
         if pos == end:
             return steps
         elif pos in visited:
