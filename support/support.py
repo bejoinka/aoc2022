@@ -49,6 +49,10 @@ def get_year_day() -> tuple[int, int]:
     day_s = os.path.basename(cwd)
     year_s = os.path.basename(os.path.dirname(cwd))
 
+    if match := re.search(r"[0-9]{4}day", day_s):
+        year_s = f"aoc{match[0][:4]}"
+        day_s = re.search(r"day([0-9]+)", day_s)[0]
+
     if not day_s.startswith('day') or not year_s.startswith('aoc'):
         raise AssertionError(f'unexpected working dir: {cwd}')
 

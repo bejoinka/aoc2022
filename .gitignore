@@ -4,6 +4,10 @@
 .vscode/
 venv/
 2021day*/
+2020day*/
+2019day*/
+2018day*/
+2017day*/
 .DS_Store
 node_modules/
 package-lock.json
