@@ -1,40 +1,15 @@
 from __future__ import annotations
 
+import re
 import argparse
 import os.path
+from functools import partial
 
 import pytest
 
 import support
-import typing
-from functools import partial
 INPUT_TXT = os.path.join(os.path.dirname(__file__), 'input.txt')
 
-# monkeys = [
-#     {
-#         "items": [79, 98],
-#         "op": partial(lambda x: x * 29),
-#         "test": partial(lambda x: 2 if x % 23 == 0 else 3)
-#     },
-#     {
-#         "items": [54, 65, 75, 74],
-#         "op": partial(lambda x: x + 6),
-#         "test": partial(lambda x: 2 if x % 19 == 0 else 0)
-#     },
-#     {
-#         "items": [79, 60, 97],
-#         "op": partial(lambda x: x * x),
-#         "test": partial(lambda x: 1 if x % 13 == 0 else 3)
-#     },
-#     {
-#         "items": [74],
-#         "op": partial(lambda x: x + 3),
-#         "test": partial(lambda x: 0 if x % 17 == 0 else 1)
-#     },
-# ]
-
-import re
-from collections import deque
 def parse_monkey(monkey_string):
     test_divis = int(re.search(r"[0-9]+", monkey_string[3])[0])
     true_monkey = int(re.search(r"[0-9]+", monkey_string[4])[0])
@@ -44,29 +19,20 @@ def parse_monkey(monkey_string):
         "items": [int(itm.strip()) for itm in monkey_string[1].split(':')[1].strip().split(',')],
         "op": partial(lambda old: eval(monkey_string[2].split('=')[1].strip())),
         "test": partial(lambda x: true_monkey if not x % test_divis else false_monkey),
-        "true": true_monkey,
-        "false": false_monkey,
-        "divisor": test_divis,
     }
-import math
+
+
 def compute(s: str) -> int:
     monkeys_unparsed = support.separate_by_newline(s.strip().split('\n'))
     monkeys_parsed = [parse_monkey(monkey) for monkey in monkeys_unparsed]
     monkey_touches = [0 for _ in range(len(monkeys_parsed))]
-    big_divisor = math.prod([m['divisor'] for m in monkeys_parsed])
     # after each monkey inspects an item, but BEFORE it tests your worry, your worry 
-    for round in range(10000):
+    for round in range(20):
         for i, monkey in enumerate(monkeys_parsed):
             for itm in monkey['items']:
-                # print('inspecting itm', itm)
                 monkey_touches[i] += 1
-                # chg worry level
                 itm = monkey["op"](itm)
-                # print('adjusted worry', itm)
-                # itm = itm // 3
-                # print('divided by 3', itm)
-                # print('sending to:', monkey['test'](itm))
-                itm = itm % big_divisor
+                itm = itm // 3
                 monkeys_parsed[monkey['test'](itm)]['items'].append(itm)
             monkey['items'] = list()
         if not round % 100:
