@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import os.path
 import ast
-import itertools
 
 import pytest
 import support
@@ -32,38 +31,32 @@ def compute(s: str) -> int:
             rock = dif(first_coord, ast.literal_eval(next_coord))
             rock_coords |= rock
             first_coord = ast.literal_eval(next_coord)
-        # print(len(rock_coords))
-        # print(support.print_coords_hash(rock_coords))
     max_depth = max(r[1] for r in rock_coords) + 2
     n = 0
     sand_overflow = False
     sands = rock_coords
     while not sand_overflow:
         n += 1
-        sand_falling = True
-        sand_coord = (500,0)
-        while sand_falling:
-            if (500,0) in sands:
+        x, y = (500, 0)
+        while True:
+            if (x, y) in sands:
                 sand_overflow = True
                 break
-            still_falling = False
-            for fall_point in [
-                (sand_coord[0], sand_coord[1] + 1),
-                (sand_coord[0] - 1, sand_coord[1] + 1),
-                (sand_coord[0] + 1, sand_coord[1] + 1),
-            ]:
-                if all([
-                    fall_point not in sands,
-                    # fall_point not in rock_coords,
-                    fall_point[1] < max_depth
-                ]):
-                    sand_coord = fall_point
-                    still_falling = True
-                    break
-            if still_falling:
-                continue
-            sands.add(sand_coord)
-            sand_falling = False
+            elif y == max_depth - 1:
+                sands.add((x,y))
+                break
+            # still_falling = False
+            elif (x, y + 1) not in sands:
+                y += 1
+            elif (x-1, y+1) not in sands:
+                y += 1
+                x -= 1
+            elif (x+1, y+1) not in sands:
+                y += 1
+                x += 1
+            else:
+                sands.add((x,y))
+                break
     return n - 1
 
 
