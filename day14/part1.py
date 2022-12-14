@@ -28,45 +28,37 @@ def compute(s: str) -> int:
     for line in l:
         coords = line.split(' -> ')
         first_coord = ast.literal_eval(coords[0])
-        for i, next_coord in enumerate(coords[1:]):
+        for next_coord in coords[1:]:
             rock = dif(first_coord, ast.literal_eval(next_coord))
             rock_coords |= rock
             first_coord = ast.literal_eval(next_coord)
-        # print(len(rock_coords))
-        # print(support.print_coords_hash(rock_coords))
     max_depth = max(r[1] for r in rock_coords)
-    # print(max_depth)
     n = 0
-    sand_start = (500,0)
     sand_overflow = False
     sands = set()
     while not sand_overflow:
         n += 1
         sand_falling = True
         sand_coord = (500,0)
-        # print('sand falling')
         while sand_falling:
             if sand_coord[1] >= max_depth:
                 sand_overflow = True
                 break
+            still_falling = False
+            for fall_point in [
+                (sand_coord[0], sand_coord[1] + 1),
+                (sand_coord[0] - 1, sand_coord[1] + 1),
+                (sand_coord[0] + 1, sand_coord[1] + 1),
+            ]:
+                if fall_point not in sands and fall_point not in rock_coords:
+                    sand_coord = fall_point
+                    still_falling = True
+                    break
+            if still_falling:
+                continue
             sands.add(sand_coord)
-            # print(sands)
-            if (sand_coord[0], sand_coord[1] + 1) not in sands and (sand_coord[0], sand_coord[1] + 1) not in rock_coords:
-                sands.remove(sand_coord)
-                sand_coord = (sand_coord[0], sand_coord[1] + 1)
-                continue
-            elif (sand_coord[0] - 1, sand_coord[1] + 1) not in sands and (sand_coord[0] - 1, sand_coord[1] + 1) not in rock_coords:
-                sands.remove(sand_coord)
-                sand_coord = (sand_coord[0] - 1, sand_coord[1] + 1) 
-                continue
-            elif (sand_coord[0] + 1, sand_coord[1] + 1) not in sands and (sand_coord[0] + 1, sand_coord[1] + 1) not in rock_coords:
-                sands.remove(sand_coord)
-                sand_coord = (sand_coord[0] + 1, sand_coord[1] + 1)
-                continue
-            else:
-                sand_falling = False
-            
-    return n - 1
+            sand_falling = False
+    return n - 1  # before the overflow starts
 
 
 INPUT_S = '''\
