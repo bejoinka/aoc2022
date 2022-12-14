@@ -33,15 +33,12 @@ def compute(s: str) -> int:
             first_coord = ast.literal_eval(next_coord)
     max_depth = max(r[1] for r in rock_coords) + 2
     n = 0
-    sand_overflow = False
     sands = rock_coords
-    while not sand_overflow:
-        n += 1
+    while True:
         x, y = (500, 0)
         while True:
             if (x, y) in sands:
-                sand_overflow = True
-                break
+                return n
             elif y == max_depth - 1:
                 sands.add((x,y))
                 break
@@ -57,7 +54,8 @@ def compute(s: str) -> int:
             else:
                 sands.add((x,y))
                 break
-    return n - 1
+        n += 1
+    raise AssertionError('...')
 
 
 INPUT_S = '''\
